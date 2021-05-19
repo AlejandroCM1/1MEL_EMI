@@ -2,15 +2,15 @@
 #include <Keypad.h> // Añade la librería del teclado.
 
 const byte ROWS = 4; //Configura 4 filas.
-const byte COLS = 4; //Configura 4 filas.
+const byte COLS = 3; //Configura 3 filas.
 char keys[ROWS][COLS] = { // asigna a cada tecla del teclado, una variable.
-  {'1', '2', '3', '+'},
-  {'4', '5', '6', '-'},
-  {'7', '8', '9', '*'},
-  {'*', '0', '=', '/'}
+  {'1', '2', '3'},
+  {'4', '5', '6'},
+  {'7', '8', '9'},
+  {'*', '0', '#'}
 };
 byte rowPins[ROWS] = {A0, A1, A2, A3}; //Define los pines de salida de las filas del teclado.
-byte colPins[COLS] = {A4, A5, 4, 10}; //Define los pines de salida de las columnas del teclado.
+byte colPins[COLS] = {A4, A5, 4}; //Define los pines de salida de las columnas del teclado.
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS ); //Le decimos a la librería del teclado, cuáles son los pines referentes a las filas y columnas previamente definidos.
 
