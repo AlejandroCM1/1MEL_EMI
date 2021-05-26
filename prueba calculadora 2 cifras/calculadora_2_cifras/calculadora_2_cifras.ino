@@ -19,16 +19,18 @@ Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS ); //Le d
 const int rs = 12, en = 11, d4 = 5, d5 = 6, d6 = 3, d7 = 2; // Asigna a cada pin de salida de la pantalla, un pin de entrada en el Arduino.
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);// Define los pines de la pantalla que se van a usar.
 int operacion;// Se definen las variables que se van a usar.
-int res;
+float res;
 char igual;
-int NumI;
-int NumII;
+float NumI;
+float NumII;
 char op;
 char reset;
-char aux1;
-char aux2;
+char aux1 ;
+char aux2; 
+char aux3;
+char aux4;
 void setup() {
-
+ 
   Serial.begin(9600);
   lcd.begin(16, 2); // Define el número de columnas y filas de la pantalla.
   lcd.setCursor(0, 0); // Coloca el cursor en la primera casilla de la primera fila.
@@ -43,19 +45,26 @@ void loop() {
   do
   {
     aux1 = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable aux1, que es tipo "caracter".*****************************FASE 1*********************************
-    Serial.print("NumI vale: ");//Comprobacion en puerto serie.
-  Serial.println(NumI);//Comprobacion en puerto serie.Imprime la variable NumI.
-    if (String(aux1).toInt() <= 9 && String(aux1).toInt() >= 0) //si el dato introducido en aux1 (en modo int) es menor o igual a 9 y mayor o igual a cero, se guarda en la variable.
-    {
-      NumI = String(aux1).toInt() + NumI * 10;
-    }
-
-  }
-  while (NumI <= 9 && NumI >= 0); // El bucle no avanza hasta que se introduce un signo de operación en la variable.
+    Serial.print("aux1 vale: ");//Comprobacion en puerto serie.
+  Serial.println(aux1);//Comprobacion en puerto serie.Imprime la variable NumI.
+  
+  }while (!aux1);
+  NumI = String(aux1).toInt()+ NumI*10;
+  
+Serial.print("NumI vale: ");//Comprobacion en puerto serie.
+  Serial.println(NumI);//Comprobacion en puerto serie.Imprime la variable NumI.(AQUÍ SE PARA).
+ lcd.print (aux1);
+do
+  {
+    aux2 = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable aux1, que es tipo "caracter".*****************************FASE 1*********************************
+    Serial.print("aux2 vale: ");//Comprobacion en puerto serie.
+  Serial.println(aux2);//Comprobacion en puerto serie.Imprime la variable NumI.
+  
+  }while (!aux2);
+  NumI = String(aux2).toInt()+ NumI*10;
   Serial.print("NumI vale: ");//Comprobacion en puerto serie.
-  Serial.println(NumI);//Comprobacion en puerto serie.Imprime la variable NumI.
-  lcd.print(NumI); // escribe su símbolo en la pantalla.
-
+  Serial.println(NumI);//Comprobacion en puerto serie.Imprime la variable NumI.(AQUÍ SE PARA).
+lcd.print (aux2);
   do
   {
     op = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable op, que es tipo "caracter".*******************************FASE 2************************************
@@ -64,7 +73,7 @@ void loop() {
   Serial.print("op vale: ");
   Serial.println(op);
   lcd.print(op); //Cada vez que se pulsa una tecla, escribe su símbolo en la pantalla.
-
+   
   switch (op) //Se asigna un valor numérico a cada valor tipo caracter de la variable operación.
   {
     case '+':
@@ -83,33 +92,51 @@ void loop() {
   Serial.print("operacion es: ");
   Serial.println(operacion);
 
-  do
+ //do
+  //{
+    //NumII = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable NumI, que es tipo "caracter".*****************************FASE 3********************************
+ // }
+ // while (!NumII);// El bucle no avanza hasta que se introduce un valor no nulo en la variable.
+ // Serial.print("NumII vale: ");
+ // Serial.println(NumII);
+ // lcd.print(NumII); // Muestra la variable en pantalla.
+do
   {
-    aux2 = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable aux1, que es tipo "caracter".*****************************FASE 1*********************************
-    if (String(aux2).toInt() <= 9 && String(aux2).toInt() >= 0) //si el dato introducido en aux1 (en modo int) es menor o igual a 9 y mayor o igual a cero, se guarda en la variable.
-    {
-      NumII = String(aux2).toInt() + NumII * 10;
-    }
-
-  }
-  while (String(aux2).toInt() <= 9 && String(aux2).toInt() >= 0); // El bucle no avanza hasta que se introduce un signo de operación en la variable.
+    aux3 = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable aux1, que es tipo "caracter".*****************************FASE 1*********************************
+    Serial.print("aux1 vale: ");//Comprobacion en puerto serie.
+  Serial.println(aux3);//Comprobacion en puerto serie.Imprime la variable NumI.
+  
+  }while (!aux3);
+  NumII = String(aux3).toInt()+ NumII*10;
+  
+Serial.print("NumII vale: ");//Comprobacion en puerto serie.
+  Serial.println(NumII);//Comprobacion en puerto serie.Imprime la variable NumI.(AQUÍ SE PARA).
+ lcd.print (aux3);
+do
+  {
+    aux4 = keypad.getKey(); //Conseguir el valor de una tecla y lo asigna a la variable aux1, que es tipo "caracter".*****************************FASE 1*********************************
+    Serial.print("aux4 vale: ");//Comprobacion en puerto serie.
+  Serial.println(aux4);//Comprobacion en puerto serie.Imprime la variable NumI.
+  
+  }while (!aux4);
+  NumII = String(aux4).toInt()+ NumII*10;
   Serial.print("NumII vale: ");//Comprobacion en puerto serie.
-  Serial.println(NumII);//Comprobacion en puerto serie.Imprime la variable NumI.
-  lcd.print(NumII); // escribe su símbolo en la pantalla.
+  Serial.println(NumII);//Comprobacion en puerto serie.Imprime la variable NumI.(AQUÍ SE PARA).
+lcd.print (aux4);
 
   switch (operacion)// Se definen matemáticamente las operaciones, una vez conocidas todas las variables implicadas.
   {
     case 0:
-      res = String(NumI).toInt() + (String(NumII).toInt()) ; //define la operación suma (traduciendo la variable tipo caracter a tipo Int).
+      res = NumI + NumII ; //define la operación suma (traduciendo la variable tipo caracter a tipo Int).
       break;
     case 1:
-      res = String(NumI).toInt() - (String(NumII).toInt()) ; //define la operación resta (traduciendo la variable tipo caracter a tipo Int).
+      res = NumI - NumII ; //define la operación resta (traduciendo la variable tipo caracter a tipo Int).
       break;
     case 2:
-      res = String(NumI).toInt() * (String(NumII).toInt()) ; //define la operación multiplicación (traduciendo la variable tipo caracter a tipo Int).
+      res = NumI * NumII ; //define la operación multiplicación (traduciendo la variable tipo caracter a tipo Int).
       break;
     case 3:
-      res = String(NumI).toInt() / (String(NumII).toInt()) ; //define la operación división (traduciendo la variable tipo caracter a tipo Int).
+      res = NumI / NumII ; //define la operación división (traduciendo la variable tipo caracter a tipo Int).
       break;
   }
 
@@ -130,7 +157,10 @@ void loop() {
   while (reset != 'C'); //cuando se pulsa la tecla 'C', el bucle avanza.***********************************************************Fase 5************************************************
   Serial.print(reset);
   Serial.println(reset);
-
+ aux1 = 0 ;
+ aux2 = 0; 
+ aux3 = 0;
+ aux4 = 0;
   operacion = 0;//Resetea la variable a valor 0.
   res = 0;//Resetea la variable a valor 0.
   igual = 0;//Resetea la variable a valor 0.
